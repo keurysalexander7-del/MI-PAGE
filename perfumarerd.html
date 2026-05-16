@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Perfumarerd – Santo Domingo Este</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,600;0,700;1,300;1,600&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:      #0C0906;
+    --surface: #151009;
+    --gold:    #BF9B5A;
+    --gold2:   #E8D5A3;
+    --rose:    #C4847A;
+    --cream:   #F0E8D8;
+    --muted:   rgba(240,232,216,0.45);
+    --border:  rgba(191,155,90,0.18);
+  }
+
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--cream);
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* ── CUSTOM CURSOR ── */
+  .cursor {
+    width: 10px; height: 10px;
+    background: var(--gold);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.15s ease, opacity 0.15s;
+    transform: translate(-50%, -50%);
+  }
+  .cursor-ring {
+    width: 36px; height: 36px;
+    border: 1px solid var(--gold);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9998;
+    transition: transform 0.35s ease, width 0.3s, height 0.3s, opacity 0.3s;
+    transform: translate(-50%, -50%);
+    opacity: 0.5;
+  }
+  body:hover .cursor { opacity: 1; }
+
+  /* ── GRAIN OVERLAY ── */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9000;
+    opacity: 0.55;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 500;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.6rem 4rem;
+    background: linear-gradient(to bottom, rgba(12,9,6,0.95) 0%, transparent 100%);
+  }
+
+  .nav-logo {
+    font-family: 'Cormorant', serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold2);
+  }
+
+  .nav-logo span {
+    color: var(--rose);
+    font-style: italic;
+    font-weight: 300;
+  }
+
+  .nav-links {
+    list-style: none;
+    display: flex;
+    gap: 2.5rem;
+  }
+
+  .nav-links a {
+    text-decoration: none;
+    color: var(--muted);
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+
+  .nav-links a:hover { color: var(--gold2); }
+
+  .nav-phone {
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    color: var(--gold);
+    text-decoration: none;
+    border: 1px solid var(--border);
+    padding: 0.45rem 1.1rem;
+    transition: background 0.3s, color 0.3s;
+  }
+
+  .nav-phone:hover { background: var(--gold); color: var(--bg); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    padding: 8rem 2rem 6rem;
+    overflow: hidden;
+  }
+
+  /* Animated radial glow */
+  .hero::before {
+    content: '';
+    position: absolute;
+    width: 700px; height: 700px;
+    background: radial-gradient(ellipse, rgba(191,155,90,0.08) 0%, transparent 70%);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    animation: pulse 6s ease-in-out infinite;
+    pointer-events: none;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    width: 400px; height: 400px;
+    background: radial-gradient(ellipse, rgba(196,132,122,0.06) 0%, transparent 70%);
+    top: 40%; left: 55%;
+    transform: translate(-50%, -50%);
+    animation: pulse 8s ease-in-out infinite 2s;
+    pointer-events: none;
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+    50%       { transform: translate(-50%, -50%) scale(1.15); opacity: 0.6; }
+  }
+
+  .hero-eyebrow {
+    font-size: 0.68rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeUp 1s ease forwards 0.3s;
+    display: flex; align-items: center; gap: 1rem;
+  }
+
+  .hero-eyebrow::before, .hero-eyebrow::after {
+    content: '';
+    display: block;
+    width: 3rem; height: 1px;
+    background: var(--gold);
+    opacity: 0.5;
+  }
+
+  .hero-title {
+    font-family: 'Cormorant', serif;
+    font-size: clamp(5rem, 14vw, 13rem);
+    font-weight: 300;
+    line-height: 0.9;
+    letter-spacing: -0.02em;
+    color: var(--cream);
+    opacity: 0;
+    animation: fadeUp 1.2s ease forwards 0.5s;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--gold);
+    display: block;
+  }
+
+  .hero-sub {
+    font-size: 1rem;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    margin-top: 2.5rem;
+    max-width: 38ch;
+    line-height: 1.9;
+    font-weight: 300;
+    opacity: 0;
+    animation: fadeUp 1s ease forwards 0.9s;
+    position: relative; z-index: 1;
+  }
+
+  .hero-ctas {
+    display: flex; gap: 1.2rem; margin-top: 3rem;
+    opacity: 0;
+    animation: fadeUp 1s ease forwards 1.1s;
+    position: relative; z-index: 1;
+  }
+
+  .btn {
+    display: inline-block;
+    text-decoration: none;
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 0.9rem 2.2rem;
+    transition: all 0.35s ease;
+    font-weight: 400;
+  }
+
+  .btn-gold {
+    background: var(--gold);
+    color: var(--bg);
+  }
+  .btn-gold:hover { background: var(--gold2); }
+
+  .btn-outline {
+    border: 1px solid var(--border);
+    color: var(--cream);
+  }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* Floating bottle decoration */
+  .hero-deco {
+    position: absolute;
+    font-size: 18rem;
+    opacity: 0.04;
+    top: 50%; right: 5%;
+    transform: translateY(-50%);
+    user-select: none;
+    animation: floatDeco 7s ease-in-out infinite;
+    pointer-events: none;
+  }
+
+  @keyframes floatDeco {
+    0%, 100% { transform: translateY(-50%) rotate(-8deg); }
+    50%       { transform: translateY(-55%) rotate(4deg); }
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 0 4rem;
+    margin: 0;
+  }
+
+  .divider-line { flex: 1; height: 1px; background: var(--border); }
+
+  .divider-icon {
+    color: var(--gold);
+    font-size: 1.2rem;
+    opacity: 0.6;
+  }
+
+  /* ── FRAGANCIAS ── */
+  .fragancias {
+    padding: 7rem 4rem;
+  }
+
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 4rem;
+  }
+
+  .section-eyebrow {
+    font-size: 0.68rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.8rem;
+  }
+
+  h2 {
+    font-family: 'Cormorant', serif;
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    font-weight: 300;
+    line-height: 1.05;
+    color: var(--cream);
+  }
+
+  h2 em { font-style: italic; color: var(--gold); }
+
+  .see-all {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 2px;
+    transition: color 0.3s, border-color 0.3s;
+    white-space: nowrap;
+  }
+  .see-all:hover { color: var(--gold); border-color: var(--gold); }
+
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5px;
+  }
+
+  .product-card {
+    background: var(--surface);
+    padding: 2.5rem 2rem;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.4s;
+    cursor: none;
+  }
+
+  .product-card::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(to right, var(--gold), var(--rose));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+  }
+
+  .product-card:hover { background: #1A1208; }
+  .product-card:hover::before { transform: scaleX(1); }
+
+  .product-emoji {
+    font-size: 3.5rem;
+    margin-bottom: 1.5rem;
+    display: block;
+    transition: transform 0.4s;
+  }
+
+  .product-card:hover .product-emoji { transform: scale(1.15) rotate(-5deg); }
+
+  .product-tag {
+    display: inline-block;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 1px solid var(--border);
+    padding: 0.2rem 0.6rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .product-name {
+    font-family: 'Cormorant', serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--cream);
+    margin-bottom: 0.5rem;
+    line-height: 1.2;
+  }
+
+  .product-notes {
+    font-size: 0.8rem;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.03em;
+  }
+
+  .product-price {
+    font-family: 'Cormorant', serif;
+    font-size: 1.8rem;
+    font-weight: 300;
+    color: var(--gold);
+  }
+
+  .product-price span {
+    font-size: 0.85rem;
+    color: var(--muted);
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+  }
+
+  /* ── FEATURED BANNER ── */
+  .banner {
+    margin: 0;
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 60vh;
+    overflow: hidden;
+  }
+
+  .banner-left {
+    padding: 6rem 4rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .banner-left .section-eyebrow { margin-bottom: 1.5rem; }
+
+  .banner-left h2 { margin-bottom: 1.5rem; }
+
+  .banner-left p {
+    font-size: 1rem;
+    line-height: 1.9;
+    color: var(--muted);
+    max-width: 38ch;
+    margin-bottom: 2.5rem;
+  }
+
+  .banner-right {
+    background: linear-gradient(135deg, #1A0E06 0%, #2D1A0A 50%, #0C0906 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .banner-glow {
+    width: 300px; height: 300px;
+    background: radial-gradient(ellipse, rgba(191,155,90,0.2) 0%, transparent 65%);
+    border-radius: 50%;
+    animation: pulse 5s ease-in-out infinite;
+  }
+
+  .banner-bottle {
+    position: absolute;
+    font-size: 12rem;
+    opacity: 0.2;
+    animation: floatDeco 6s ease-in-out infinite;
+  }
+
+  .banner-text-deco {
+    position: absolute;
+    font-family: 'Cormorant', serif;
+    font-size: 9rem;
+    font-weight: 700;
+    color: rgba(191,155,90,0.05);
+    letter-spacing: 0.05em;
+    user-select: none;
+  }
+
+  /* ── INFO STRIP ── */
+  .info-strip {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-top: 1px solid var(--border);
+  }
+
+  .info-item {
+    padding: 3rem 4rem;
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    transition: background 0.3s;
+  }
+
+  .info-item:last-child { border-right: none; }
+  .info-item:hover { background: var(--surface); }
+
+  .info-icon { font-size: 1.8rem; margin-bottom: 0.5rem; }
+
+  .info-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.3rem;
+  }
+
+  .info-value {
+    font-family: 'Cormorant', serif;
+    font-size: 1.4rem;
+    font-weight: 400;
+    color: var(--cream);
+    line-height: 1.4;
+  }
+
+  .info-sub {
+    font-size: 0.8rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  .info-sub a {
+    color: var(--gold);
+    text-decoration: none;
+  }
+
+  /* ── MARQUEE ── */
+  .marquee-wrap {
+    overflow: hidden;
+    padding: 1.5rem 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: var(--bg);
+  }
+
+  .marquee-track {
+    display: flex;
+    gap: 3rem;
+    animation: marquee 22s linear infinite;
+    width: max-content;
+  }
+
+  .marquee-item {
+    font-family: 'Cormorant', serif;
+    font-size: 1rem;
+    font-style: italic;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .marquee-dot {
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: var(--gold);
+    opacity: 0.5;
+    display: inline-block;
+  }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
+  /* ── MAP/LOCATION ── */
+  .location-section {
+    padding: 7rem 4rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+  }
+
+  .location-left .section-eyebrow { margin-bottom: 1rem; }
+
+  .location-left h2 { margin-bottom: 1.5rem; }
+
+  .location-left p {
+    font-size: 1rem;
+    line-height: 1.9;
+    color: var(--muted);
+    margin-bottom: 2.5rem;
+    max-width: 40ch;
+  }
+
+  .location-details {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+
+  .loc-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.2rem 1.5rem;
+    border: 1px solid var(--border);
+    transition: border-color 0.3s, background 0.3s;
+  }
+
+  .loc-item:hover { border-color: var(--gold); background: var(--surface); }
+
+  .loc-icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 0.1rem; }
+
+  .loc-text-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.3rem;
+  }
+
+  .loc-text-value {
+    font-family: 'Cormorant', serif;
+    font-size: 1.2rem;
+    color: var(--cream);
+  }
+
+  .loc-text-value a {
+    color: var(--cream);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .loc-text-value a:hover { color: var(--gold); }
+
+  .map-box {
+    border: 1px solid var(--border);
+    overflow: hidden;
+    position: relative;
+    height: 450px;
+  }
+
+  .map-box iframe {
+    width: 100%; height: 100%;
+    border: none;
+    filter: grayscale(1) invert(1) sepia(0.2) hue-rotate(180deg) brightness(0.75);
+    transition: filter 0.4s;
+  }
+
+  .map-box:hover iframe { filter: grayscale(0.6) sepia(0.1) brightness(0.85); }
+
+  .map-overlay {
+    position: absolute;
+    top: 1rem; left: 1rem;
+    background: rgba(12,9,6,0.92);
+    border: 1px solid var(--border);
+    padding: 0.8rem 1.2rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    pointer-events: none;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    padding: 4rem 4rem 2rem;
+  }
+
+  .footer-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 3rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .footer-brand .nav-logo { font-size: 1.8rem; }
+
+  .footer-brand p {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-top: 0.8rem;
+    max-width: 26ch;
+    line-height: 1.7;
+  }
+
+  .footer-links h4 {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.2rem;
+  }
+
+  .footer-links ul { list-style: none; }
+
+  .footer-links li { margin-bottom: 0.6rem; }
+
+  .footer-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s;
+  }
+
+  .footer-links a:hover { color: var(--gold); }
+
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-bottom p {
+    font-size: 0.75rem;
+    color: var(--muted);
+    opacity: 0.5;
+  }
+
+  /* ── STATUS BADGE ── */
+  .status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.35rem 0.9rem;
+    border: 1px solid;
+  }
+
+  .status-badge.closed {
+    border-color: rgba(196,132,122,0.3);
+    color: var(--rose);
+  }
+
+  .status-badge.open {
+    border-color: rgba(100,200,100,0.3);
+    color: #8BC87A;
+  }
+
+  .status-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+    animation: blink 2s ease infinite;
+  }
+
+  @keyframes blink {
+    0%,100% { opacity: 1; } 50% { opacity: 0.3; }
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+
+    .hero { padding: 7rem 1.5rem 5rem; }
+    .hero-deco { font-size: 8rem; opacity: 0.05; right: -2rem; }
+
+    .fragancias { padding: 4rem 1.5rem; }
+    .section-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+    .products-grid { grid-template-columns: 1fr 1fr; }
+
+    .banner { grid-template-columns: 1fr; }
+    .banner-left { padding: 4rem 1.5rem; }
+    .banner-right { min-height: 30vh; }
+
+    .info-strip { grid-template-columns: 1fr; }
+    .info-item { border-right: none; border-bottom: 1px solid var(--border); padding: 2rem 1.5rem; }
+    .info-item:last-child { border-bottom: none; }
+
+    .location-section { grid-template-columns: 1fr; padding: 4rem 1.5rem; gap: 3rem; }
+    .map-box { height: 300px; }
+
+    footer { padding: 3rem 1.5rem 1.5rem; }
+    .footer-top { flex-direction: column; gap: 2.5rem; }
+    .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; }
+  }
+
+  @media (max-width: 600px) {
+    .products-grid { grid-template-columns: 1fr; }
+    .hero-ctas { flex-direction: column; align-items: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Custom Cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Perfuma<span>rerd</span></div>
+  <ul class="nav-links">
+    <li><a href="#fragancias">Fragancias</a></li>
+    <li><a href="#nosotros">Nosotros</a></li>
+    <li><a href="#ubicacion">Ubicación</a></li>
+  </ul>
+  <a href="tel:+18297177053" class="nav-phone">📞 (829) 717-7053</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-deco">🫧</div>
+  <div class="hero-eyebrow">Perfumarerd · Santo Domingo Este</div>
+  <h1 class="hero-title">El arte<br><em>de oler</em><br>bien</h1>
+  <p class="hero-sub">
+    Fragancias originales y de alta gama para quienes saben que el aroma es la primera impresión que perdura.
+  </p>
+  <div class="hero-ctas">
+    <a href="#fragancias" class="btn btn-gold">Ver Fragancias</a>
+    <a href="#ubicacion" class="btn btn-outline">Visítanos</a>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <div class="marquee-item">Fragancias Originales <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Alta Gama <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Niche Perfumes <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Decants Disponibles <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Perfumes Árabes <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Para Hombre y Mujer <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Santo Domingo Este <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Fragancias Originales <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Alta Gama <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Niche Perfumes <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Decants Disponibles <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Perfumes Árabes <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Para Hombre y Mujer <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Santo Domingo Este <span class="marquee-dot"></span></div>
+  </div>
+</div>
+
+<!-- FRAGANCIAS -->
+<section class="fragancias" id="fragancias">
+  <div class="section-header">
+    <div>
+      <div class="section-eyebrow">Colección destacada</div>
+      <h2>Nuestras <em>fragancias</em></h2>
+    </div>
+    <a href="#" class="see-all">Ver todo el catálogo →</a>
+  </div>
+
+  <div class="products-grid">
+    <div class="product-card">
+      <span class="product-emoji">🌹</span>
+      <div class="product-tag">Para Ella</div>
+      <div class="product-name">Rose Oud Elixir</div>
+      <div class="product-notes">Rosa de Damasco · Oud · Sándalo blanco</div>
+      <div class="product-price">RD$2,800 <span>/ 50ml</span></div>
+    </div>
+
+    <div class="product-card">
+      <span class="product-emoji">🌿</span>
+      <div class="product-tag">Para Él</div>
+      <div class="product-name">Noir Intense</div>
+      <div class="product-notes">Vetiver · Ambar · Cedro oscuro</div>
+      <div class="product-price">RD$3,200 <span>/ 100ml</span></div>
+    </div>
+
+    <div class="product-card">
+      <span class="product-emoji">🌊</span>
+      <div class="product-tag">Unisex</div>
+      <div class="product-name">Aqua Nobile</div>
+      <div class="product-notes">Bergamota · Brisa marina · Musgo blanco</div>
+      <div class="product-price">RD$2,400 <span>/ 75ml</span></div>
+    </div>
+
+    <div class="product-card">
+      <span class="product-emoji">🌙</span>
+      <div class="product-tag">Árabe · Exclusivo</div>
+      <div class="product-name">Al Haramain Gold</div>
+      <div class="product-notes">Oud árabe · Azafrán · Vainilla oriental</div>
+      <div class="product-price">RD$4,500 <span>/ 100ml</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- BANNER -->
+<section class="banner" id="nosotros">
+  <div class="banner-left">
+    <div class="section-eyebrow">Sobre Perfumarerd</div>
+    <h2>Pasión por<br><em>el aroma</em></h2>
+    <p>
+      En Perfumarerd encontrarás una cuidadosa selección de fragancias originales, desde clásicos atemporales hasta los perfumes nicho más exclusivos del mercado. Ubicados dentro de Casper Clothing, en Santo Domingo Este, te esperamos para que encuentres tu firma olfativa.
+    </p>
+    <a href="tel:+18297177053" class="btn btn-outline">Llamar ahora</a>
+  </div>
+  <div class="banner-right">
+    <div class="banner-text-deco">AROMA</div>
+    <div class="banner-bottle">🧴</div>
+    <div class="banner-glow"></div>
+  </div>
+</section>
+
+<!-- INFO STRIP -->
+<div class="info-strip">
+  <div class="info-item">
+    <div class="info-icon">🕘</div>
+    <div>
+      <div class="info-label">Horario de hoy</div>
+      <div class="info-value">9:30 AM – cierre</div>
+      <div class="info-sub">
+        <span class="status-badge closed"><span class="status-dot"></span>Cerrado ahora</span>
+      </div>
+    </div>
+  </div>
+  <div class="info-item">
+    <div class="info-icon">📍</div>
+    <div>
+      <div class="info-label">Ubicación</div>
+      <div class="info-value">Casper Clothing</div>
+      <div class="info-sub">Santo Domingo Este · G3QW+RQ</div>
+    </div>
+  </div>
+  <div class="info-item">
+    <div class="info-icon">📞</div>
+    <div>
+      <div class="info-label">Teléfono</div>
+      <div class="info-value"><a href="tel:+18297177053">(829) 717-7053</a></div>
+      <div class="info-sub">Llámanos o escríbenos por WhatsApp</div>
+    </div>
+  </div>
+</div>
+
+<!-- LOCATION -->
+<section class="location-section" id="ubicacion">
+  <div class="location-left">
+    <div class="section-eyebrow">Encuéntranos</div>
+    <h2>Visítanos en<br><em>Santo Domingo</em></h2>
+    <p>
+      Estamos dentro de Casper Clothing en Santo Domingo Este. Ven, prueba nuestras fragancias y encuentra la que te define.
+    </p>
+    <div class="location-details">
+      <div class="loc-item">
+        <div class="loc-icon">📍</div>
+        <div>
+          <div class="loc-text-label">Dirección</div>
+          <div class="loc-text-value">Casper Clothing, Santo Domingo Este, RD</div>
+        </div>
+      </div>
+      <div class="loc-item">
+        <div class="loc-icon">📞</div>
+        <div>
+          <div class="loc-text-label">Teléfono</div>
+          <div class="loc-text-value"><a href="tel:+18297177053">(829) 717-7053</a></div>
+        </div>
+      </div>
+      <div class="loc-item">
+        <div class="loc-icon">🕘</div>
+        <div>
+          <div class="loc-text-label">Horario</div>
+          <div class="loc-text-value">Abre a las 9:30 a.m.</div>
+        </div>
+      </div>
+      <div class="loc-item">
+        <div class="loc-icon">🗺️</div>
+        <div>
+          <div class="loc-text-label">Código Plus</div>
+          <div class="loc-text-value">G3QW+RQ Santo Domingo Este</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="map-box">
+    <div class="map-overlay">📍 Perfumarerd</div>
+    <iframe
+      src="https://www.google.com/maps?q=G3QW%2BRQ+Santo+Domingo+Este&output=embed"
+      allowfullscreen
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="nav-logo">Perfuma<span style="color:var(--rose);font-style:italic;font-weight:300">rerd</span></div>
+      <p>Tu destino de fragancias originales en Santo Domingo Este.</p>
+    </div>
+    <div class="footer-links">
+      <h4>Navegación</h4>
+      <ul>
+        <li><a href="#fragancias">Fragancias</a></li>
+        <li><a href="#nosotros">Nosotros</a></li>
+        <li><a href="#ubicacion">Ubicación</a></li>
+        <li><a href="tel:+18297177053">Contacto</a></li>
+      </ul>
+    </div>
+    <div class="footer-links">
+      <h4>Contacto</h4>
+      <ul>
+        <li><a href="tel:+18297177053">(829) 717-7053</a></li>
+        <li><a href="#">WhatsApp</a></li>
+        <li><a href="#">Instagram</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Perfumarerd · Santo Domingo Este, República Dominicana</p>
+    <p>Diseñado con ✦ y pasión por el aroma</p>
+  </div>
+</footer>
+
+<script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.left = mx + 'px';
+    cursor.style.top  = my + 'px';
+  });
+
+  function animRing() {
+    rx += (mx - rx) * 0.12;
+    ry += (my - ry) * 0.12;
+    ring.style.left = rx + 'px';
+    ring.style.top  = ry + 'px';
+    requestAnimationFrame(animRing);
+  }
+  animRing();
+
+  // Grow ring on hover over cards/buttons
+  document.querySelectorAll('.product-card, .btn, .loc-item, .nav-phone').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      ring.style.width = '60px';
+      ring.style.height = '60px';
+      ring.style.opacity = '0.8';
+    });
+    el.addEventListener('mouseleave', () => {
+      ring.style.width = '36px';
+      ring.style.height = '36px';
+      ring.style.opacity = '0.5';
+    });
+  });
+
+  // Fade-in on scroll
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.product-card, .info-item, .loc-item, .banner-left').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.7s ease, transform 0.7s ease';
+    observer.observe(el);
+  });
+
+  // Dynamic open/closed status
+  function updateStatus() {
+    const now = new Date();
+    const h = now.getHours(), m = now.getMinutes();
+    const totalMin = h * 60 + m;
+    const openMin = 9 * 60 + 30;
+    const closeMin = 21 * 60;
+    const badge = document.querySelector('.status-badge');
+    if (badge) {
+      if (totalMin >= openMin && totalMin < closeMin) {
+        badge.className = 'status-badge open';
+        badge.innerHTML = '<span class="status-dot"></span>Abierto ahora';
+      } else {
+        badge.className = 'status-badge closed';
+        badge.innerHTML = '<span class="status-dot"></span>Cerrado · Abre 9:30 AM';
+      }
+    }
+  }
+  updateStatus();
+</script>
+</body>
+</html>
